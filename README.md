@@ -4,7 +4,7 @@ By [@zeroxjf](https://x.com/zeroxjf)
 
 **This will kernel panic your device. Save your work.**
 
-Tested on iOS 26.3 (23D125) on iPhone18,2 (A19 Pro).
+Tested on iOS 26.3 (23D125) on iPhone18,2 (iPhone 17 Pro Max, A19 Pro).
 
 ## Trigger
 

